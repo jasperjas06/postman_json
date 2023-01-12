@@ -20,3 +20,17 @@ export const UserEdu=async(req,res)=>{
     }
     
 }
+
+/// update Address
+
+export const updateAddress=async(req,res)=>{
+    try {
+        const id = req.body.id;
+        let Xuser= await Address.findOne({userId:id})
+        if(!Xuser) return res.status(200).json({message:"No User"})
+        await Address.updateOne({$set:req.body})
+        res.status(200).json({message:"Address Updated"})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+}
