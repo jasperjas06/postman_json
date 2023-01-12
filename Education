@@ -1,0 +1,22 @@
+export const UserEdu=async(req,res)=>{
+    try {
+        let id= req.params.id;
+    let Xuser= await User.findById({_id:id});
+    if(!Xuser) return res.status(200).json({message:"No user found"})
+
+    let userEducation=  new Education({
+        userId:id,
+        sslc:{
+            SSlc_schoolName:req.body.SSlc_schoolName,
+            SSlc_board:req.body.SSlc_board,
+            SSlc_yearOfPassing:req.body.SSlc_yearOfPassing,
+            SSlc_percentage:req.body.SSlc_percentage
+        }
+    })
+    await userEducation.save();
+    res.status(200).json({message:"Education added"})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+    
+}
